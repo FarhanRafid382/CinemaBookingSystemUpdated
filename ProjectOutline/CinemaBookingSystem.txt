@@ -1,0 +1,188 @@
+Here is the **clean final ERD description**, with **Admin** and **Log** added exactly as you designed:
+
+I keep everything from your cinema booking ERD untouched.
+I add ONLY the two new entities and ONLY the two new relations:
+
+**Admin —<admin_acts>— Log —<user_acts>— User**
+
+Nothing else.
+
+---
+
+# **FINAL ERD DESCRIPTION (FULL + CLEAN + WITH ADMIN + LOG)**
+
+---
+
+# **1. Movie**
+
+**Attributes:**
+• id (PK)
+• title
+• genre
+• duration_minutes
+• release_date
+
+**Relations:**
+• Movie-one-<schedule>-many-Showtime
+• Movie-one-<score>-many-MovieRating
+
+---
+
+# **2. Theater**
+
+**Attributes:**
+• id (PK)
+• name
+• location
+
+**Relations:**
+• Theater-one-<Screening>-many-Screen
+
+---
+
+# **3. Screen**
+
+**Attributes:**
+• id (PK)
+• theater_id (FK → Theater.id)
+• screen_number
+• total_seats
+
+**Relations:**
+• Screen-one-<showing>-many-Showtime
+• Screen-one-<available>-many-Seat
+• Screen-many-<Screening>-one-Theater
+
+---
+
+# **4. Seat**
+
+**Attributes:**
+• id (PK)
+• screen_id (FK → Screen.id)
+• seat_number
+• seat_type
+
+**Relations:**
+• Seat-many-<available>-one-Screen
+• Seat-one-<Fixed>-many-BookedSeat
+
+---
+
+# **5. Showtime**
+
+**Attributes:**
+• id (PK)
+• movie_id (FK → Movie.id)
+• screen_id (FK → Screen.id)
+• show_date
+• show_time
+
+**Relations:**
+• Showtime-many-<schedule>-one-Movie
+• Showtime-many-<showing>-one-Screen
+• Showtime-one-<reserved>-many-Booking
+
+---
+
+# **6. User**
+
+**Attributes:**
+• id (PK)
+• name
+• phone
+• email
+• password_hash
+
+**Relations:**
+• User-one-<reservation>-many-Booking
+• User-one-<reviews>-many-MovieRating
+• User-one-<user_acts>-many-Log  **(NEW)**
+
+---
+
+# **7. Booking**
+
+**Attributes:**
+• id (PK)
+• user_id (FK → User.id)
+• showtime_id (FK → Showtime.id)
+• booking_time
+• total_price
+
+**Relations:**
+• Booking-many-<reservation>-one-User
+• Booking-many-<reserved>-one-Showtime
+• Booking-one-<booked>-many-BookedSeat
+
+---
+
+# **8. BookedSeat**
+
+**Attributes:**
+• id (PK)
+• booking_id (FK → Booking.id)
+• seat_id (FK → Seat.id)
+
+**Relations:**
+• BookedSeat-many-<booked>-one-Booking
+• BookedSeat-many-<Fixed>-one-Seat
+
+---
+
+# **9. MovieRating**
+
+**Attributes:**
+• id (PK)
+• user_id (FK → User.id)
+• movie_id (FK → Movie.id)
+• score
+
+**Relations:**
+• MovieRating-many-<reviews>-one-User
+• MovieRating-many-<score>-one-Movie
+
+---
+
+# **10. Admin**  **(NEW ENTITY)**
+
+**Attributes:**
+• id (PK)
+• email
+• password_hash
+
+**Relations:**
+• Admin-one-<admin_acts>-many-Log
+
+---
+
+# **11. Log**  **(NEW ENTITY)**
+
+**Attributes:**
+• id (PK)
+• admin_id (FK → Admin.id, nullable)
+• user_id (FK → User.id, nullable)
+• action_time
+
+**Relations:**
+• Log-many-<admin_acts>-one-Admin
+• Log-many-<user_acts>-one-User
+
+**Constraint:**
+Exactly one of admin_id or user_id must be non-NULL.
+
+---
+
+# **SUMMARY OF ALL RELATIONS**
+
+### **Core System**
+
+Movie 1→many Showtime
+Theater 1→many Screen
+Screen 1→many Showtime
+Screen 1→many Seat
+Showtime 1→many Booking
+Booking 1→many BookedSeat
+User 1→many Booking
+User 1→many MovieRating
+Movie 1→many MovieRating

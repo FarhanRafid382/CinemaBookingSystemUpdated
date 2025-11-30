@@ -1,0 +1,217 @@
+
+
+• user login
+• admin login
+• ticket booking
+• viewing movies and showtimes
+• user profile
+• admin CRUD on movie/screen/showtime
+• logout
+• homepage visible to guests and users
+• all 9 tables used in queries
+
+No wasted files.
+
+---
+
+# **THE 8–FILE PHP STRUCTURE (Final, Minimal, Fully Functional)**
+
+## **1. login.php**
+
+Purpose:
+• Login form
+• Handles both User and Admin login
+• Checks email + password in both tables
+• Redirects:
+– If user → profile.php
+– If admin → admin_dashboard.php
+
+Queries used:
+• SELECT from User
+• SELECT from Admin
+• INSERT into Log
+
+---
+
+## **2. index.php** (Homepage)
+
+Purpose:
+• Visible to guests and logged-in users
+• Shows all movies + showtimes + seat availability + price + theater + screen
+• Button: “Book your tickets” → booking.php
+• Button: “Go to Login Page” (if not logged in)
+• Shows Logout (if logged in)
+
+Queries used:
+• SELECT Movie + Screen + Seat + Showtime
+• SELECT counts of available seats
+
+---
+
+## **3. profile.php** (User Profile)
+
+Purpose:
+• Requires user login
+• Shows:
+– User info
+– Bookings
+– Seats booked
+– Movie details
+– Showtime details
+– Theater + Screen info
+
+Queries used:
+• SELECT Booking + BookedSeat + Showtime + Movie + Seat + Screen + Theater
+• INSERT Log (user action tracking)
+
+---
+
+## **4. booking.php** (Book Tickets)
+
+Purpose:
+• Requires user login
+• Dropdowns:
+– movie
+– showtime
+– theater
+– screen
+– seat type
+• Shows number of available seats
+• Books ticket
+• Inserts booking, booked_seat
+• Updates seat availability (based on business logic)
+
+Queries used:
+• SELECT Movie, Showtime, Screen, Seat
+• INSERT Booking
+• INSERT BookedSeat
+• INSERT Log
+
+---
+
+## **5. admin_dashboard.php**
+
+Purpose:
+• Requires admin login
+• Admin menu:
+– Manage Movies
+– Manage Showtimes
+– Manage Screens
+• Buttons linking to CRUD pages
+• Logout
+
+Queries used:
+• SELECT summary counts
+• INSERT Log
+
+---
+
+## **6. admin_movies.php** (Movie CRUD)
+
+Purpose:
+• Admin adds, edits, deletes movies
+• Operates on Movie table
+• List movies with edit/delete buttons
+• Form to add new movie
+
+Queries used:
+• SELECT Movie
+• INSERT Movie
+• UPDATE Movie
+• DELETE Movie
+• INSERT Log
+
+---
+
+## **7. admin_showtimes.php** (Showtime CRUD)
+
+Purpose:
+• Admin manages showtimes
+• Form fields:
+– movie
+– screen
+– date
+– time
+
+Queries used:
+• SELECT Showtime
+• SELECT Movie, Screen
+• INSERT Showtime
+• UPDATE Showtime
+• DELETE Showtime
+• INSERT Log
+
+---
+
+## **8. admin_screens.php** (Screen CRUD)
+
+Purpose:
+• Admin manages screen details
+• Linked to Theater
+
+Queries used:
+• SELECT Screen
+• SELECT Theater
+• INSERT Screen
+• UPDATE Screen
+• DELETE Screen
+• INSERT Log
+
+---
+
+# **+ 1 FILE**
+
+## **style.css**
+
+Purpose:
+• Basic layout
+• Required by your project instructions
+
+---
+
+# **PAGE FLOW OVERVIEW**
+
+### **Guest**
+
+index.php → login.php → (login success) → profile.php or admin_dashboard.php
+
+### **User**
+
+login.php → profile.php → (view bookings)
+profile.php → index.php → booking.php
+booking.php → profile.php
+
+### **Admin**
+
+login.php → admin_dashboard.php
+admin_dashboard.php → admin_movies.php
+admin_dashboard.php → admin_showtimes.php
+admin_dashboard.php → admin_screens.php
+
+### **Logout**
+
+logout.php (optional short file or process inside login.php)
+
+If forced to stay within 8 files, logout can be a button linking back to login.php and destroying session.
+
+---
+
+# **CONFIRMATION**
+
+Your entire cinema booking system with:
+
+• Users
+• Admin
+• Admin logs
+• CRUD on movies
+• CRUD on showtimes
+• CRUD on screens
+• Booking system
+• Homepage with all showtimes
+• User profile
+• Login
+• Guest access
+• Logout
+• All 9 tables used
+
+
